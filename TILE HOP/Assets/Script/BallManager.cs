@@ -44,11 +44,11 @@ public class BallManager : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow)) 
+        if (Input.GetKey(KeyCode.LeftArrow) && GameManager.isBallRunning) 
         { 
             transform.position = new Vector3(Mathf.Clamp(transform.position.x - Time.deltaTime * movementSensivity, -1, 1), transform.position.y, transform.position.z);
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) && GameManager.isBallRunning)
         {
             transform.position = new Vector3(Mathf.Clamp(transform.position.x + Time.deltaTime * movementSensivity, -1, 1), transform.position.y, transform.position.z);
         }
@@ -57,7 +57,7 @@ public class BallManager : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Tile") && !isInCollision) {
+        if (collision.gameObject.CompareTag("Tile") && !isInCollision && GameManager.isBallRunning) {
             isInCollision = true;
             collision.transform.GetChild(2).GetComponent<MeshRenderer>().material = deactiveTileColor_face;
             collision.transform.GetChild(3).GetChild(0).GetComponent<ParticleSystem>().Play();
